@@ -1,9 +1,8 @@
 export class VideoToFrames {
   /**
-     * Extracts frames from the video and returns them as an array of imageData
      * @param videoUrl url to the video file (html5 compatible format) eg: mp4
      * @param amount number of frames per second or total number of frames that you want to extract
-     * @param type [fps, totalFrames] The method of extracting frames: Number of frames per second of video or the total number of frames acros the whole video duration. defaults to fps
+     * @param specificFrames show only specific frames ex: [10, 20, 44]
      */
   static getFrames( videoUrl, amount, specificFrames) {
     return new Promise((resolve) => {
@@ -16,7 +15,7 @@ export class VideoToFrames {
       video.crossOrigin = 'anonymous'
       video.preload = 'auto'
       let that = this
-      
+
       video.addEventListener('loadeddata', async function () {
         canvas.width = video.videoWidth
         canvas.height = video.videoHeight
@@ -31,8 +30,6 @@ export class VideoToFrames {
           if (specificFrames?.length) {
             const findFrame = specificFrames?.find(specificFrame => specificFrame === indexFrame) ?? null
             if (findFrame) {
-            //   console.log('specific: ', indexFrame)
-            //   console.log('specific: ', time)
               frames.push(await that.getVideoFrame(video, context, canvas, time))
             }
           } else {
