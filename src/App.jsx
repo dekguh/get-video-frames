@@ -16,7 +16,7 @@ function App() {
 
   const handleExtractClick = async () => {
     setIsLoading(true)
-    const fileUrl = fromUrl ?? URL.createObjectURL(fileVideo)
+    const fileUrl = fromUrl ? fromUrl : URL.createObjectURL(fileVideo)
     const frames = await VideoToFrames.getFrames(fileUrl, totalFrames, specificFrames)
     setIsLoading(false)
 
